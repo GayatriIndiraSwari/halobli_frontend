@@ -7,7 +7,438 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+:root {
+  --bar-height: 58px;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.spin {
+  animation: spin 1.2s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media print {
+
+  /* A4 Landscape */
+  @page {
+    size: A4 landscape;
+    margin: 1.5cm;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  /* Sembunyikan semua dulu */
+  body * {
+    visibility: hidden;
+  }
+
+  /* Paksa sembunyikan filter */
+  .filter-area {
+    display: none !important;
+  }
+
+  /* Tampilkan hanya area cetak */
+  .print-area,
+  .print-area * {
+    visibility: visible;
+  }
+
+  /* Posisi rapi */
+  .print-area {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+  }
+
+  /* ============================= */
+  /* MODE PRINT TABLE              */
+  /* ============================= */
+  .print-table .print-text-area {
+    display: none;
+  }
+
+  /* ============================= */
+  /* MODE PRINT TEXT               */
+  /* ============================= */
+  .print-text table {
+    display: none !important;
+  }
+
+  .print-text-area {
+    font-size: 12px;
+    line-height: 1.6;
+  }
+
+  .print-text-area hr {
+    margin: 10px 0;
+  }
+
+  .print-text-area h5 {
+    text-transform: uppercase;
+  }
+
+  .print-text .print-text-area {
+    display: block;
+  }
+
+  /* Header */
+  .print-header {
+    text-align: center;
+  }
+
+  .print-logo {
+    height: 70px;
+    object-fit: contain;
+  }
+
+  /* Hilangkan tombol & icon */
+  button,
+  .bi,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Tabel */
+  table {
+    font-size: 11px;
+  }
+
+  th,
+  td {
+    padding: 6px !important;
+  }
+
+  thead {
+    background-color: #000 !important;
+    color: #fff !important;
+  }
+}
+
+@media print {
+  .print-signature {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+    page-break-inside: avoid;
+  }
+
+  .sign-left,
+  .sign-right {
+    width: 45%;
+  }
+
+  .sign-left {
+    text-align: left;
+  }
+
+  .sign-right {
+    text-align: right;
+  }
+
+  .print-signature {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 60px;
+    page-break-inside: avoid;
+  }
+
+  .sign-left,
+  .sign-right {
+    width: 45%;
+  }
+
+  .sign-left {
+    text-align: left;
+  }
+
+  .sign-right {
+    text-align: right;
+  }
+}
+
+
+/* ============================= */
+/* PRINT ONLY ELEMENT            */
+/* ============================= */
+.print-only {
+  display: none;
+}
+
+.print-text-area {
+  display: none;
+}
+
+/* ============================= */
+/* GLOBAL LAYOUT (FOOTER FIX) */
+/* ============================= */
+
+html{
+  overflow-y: scroll;
+}
+body,
+#root {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior-y: auto;
+  overscroll-behavior-x: none;
+}
+
+.app-wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  padding-top: calc(20px + var(--bar-height));
+  overflow-y: visible;
+}
+
+/* ============================= */
+/* FIX ResizeObserver WARNING   */
+/* ============================= */
+
+body {
+  overflow-anchor: none;
+  overflow-y: auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+.brand-logo {
+  height: 42px;
+  width: auto;
+  object-fit: contain;
+  display: block;
+}
+
+/* ===== NAVBAR USER ===== */
+.navbar-user {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--bar-height);
+  z-index: 1030;
+  background: linear-gradient(90deg, #0d6efd, #0b5ed7);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+}
+
+/* Logo & judul */
+.navbar-user .navbar-brand span {
+  color: #ffffff;
+}
+
+/* Menu default */
+.nav-user-link {
+  position: relative;
+  color: rgba(255, 255, 255, 0.75) !important;
+  font-weight: 500;
+  margin-right: 10px;
+}
+
+.nav-user-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 3px;
+  background-color: #ffffff;
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.nav-user-link.active::after {
+  transform: scaleX(1);
+}
+
+/* Hover */
+.nav-user-link:hover {
+  color: #ffffff !important;
+}
+
+/* Menu AKTIF */
+.nav-user-link.active {
+  color: #ffffff !important;
+  font-weight: 700;
+  border-bottom-color: #ffffff;
+}
+
+.navbar-user .btn-outline-danger:hover {
+  background-color: #ffffff;
+  color: #dc3545;
+}
+
+/* ============================= */
+/* FOOTER USER                  */
+/* ============================= */
+.footer-user {
+  flex-shrink: 0;
+  height: var(--bar-height);
+  background: linear-gradient(90deg, #0b5ed7, #0d6efd);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.footer-user small {
+  opacity: 0.9;
+}
+
+/* Tidak keluar */
+canvas,
+svg {
+  max-width: 100% !important;
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+/* ============================= */
+/* NAVBAR MOBILE FIX (ONLY MOBILE) */
+/* ============================= */
+
+@media (max-width: 991.98px) {
+
+  /* Background menu saat collapse */
+  .navbar-user .navbar-collapse {
+    background: linear-gradient(180deg, #0d6efd, #0b5ed7);
+    padding: 12px 16px;
+  }
+
+  /* Menu item mobile */
+  .navbar-user .navbar-collapse .nav-user-link {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    margin: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* Hover mobile */
+  .navbar-user .navbar-collapse .nav-user-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+
+  /* Tombol logout mobile */
+  .navbar-user .navbar-collapse .nav-logout {
+    margin-top: 10px;
+    width: 100%;
+  }
+}
+
+/* ===== NAVBAR ADMIN ===== */
+.navbar-admin {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--bar-height);
+  z-index: 1030;
+  background-color: #212529;
+  /* dark */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+.navbar-admin .navbar-brand span {
+  color: #ffffff;
+}
+
+.navbar-admin .nav-admin-link {
+  color: rgba(255, 255, 255, 0.75) !important;
+}
+
+.navbar-admin .nav-admin-link:hover,
+.navbar-admin .nav-admin-link.active {
+  color: #ffffff !important;
+}
+
+/* ============================= */
+/* NAVBAR ADMIN MOBILE FIX       */
+/* ============================= */
+
+@media (max-width: 991.98px) {
+  .navbar-admin .navbar-collapse {
+    background-color: #212529;
+    padding: 12px 16px;
+  }
+
+  .navbar-admin .navbar-collapse .nav-link {
+    display: block;
+    width: 100%;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .navbar-admin .navbar-collapse .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+}
+
+/* ===== FOOTER ADMIN ===== */
+.footer-admin {
+  height: var(--bar-height);
+  background-color: #212529;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+}
+
+.timeline {
+  position: relative;
+  padding-left: 10px;
+}
+
+.timeline::before {
+  content: "";
+  position: absolute;
+  left: 8px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #dee2e6;
+}
+
+.timeline-dot {
+  width: 14px;
+  height: 14px;
+  background: #0d6efd;
+  border-radius: 50%;
+  display: inline-block;
+  margin-top: 6px;
 }
