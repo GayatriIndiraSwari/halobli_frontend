@@ -58,7 +58,7 @@ function LoginUser() {
       <Card className="mx-auto" style={{ maxWidth: "400px" }}>
         <Card.Body>
           <Card.Title className="text-center mb-4">
-            Login Pegawai
+            Login Pegawai BPS
           </Card.Title>
 
           <AlertModal
